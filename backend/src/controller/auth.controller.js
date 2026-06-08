@@ -1,3 +1,4 @@
+const { tokenblackist } = require("../models/blacklisttoken.model");
 const userModel = require("../models/user.models");
 const bcrypt = require("bcrypt");
 
@@ -73,4 +74,30 @@ email
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-module.exports = { registerUser, loginUser };
+
+const logoutController = (req,res)=>{
+  const token = req.cookies.token
+
+if (!token)
+{
+  return res.status(400).json({
+    message:"Token Not Found"
+  })
+}
+try{
+const token_blacklist = await tokenblackist.create({
+  token
+})
+res.clearCookie("token")
+res.status(200).json({
+      message: "user logged out successfully",
+      token,
+    });
+
+}
+catch(e){
+  console.error("Error in logging out user:", e);
+    return res.status(500).json({ message: "Internal server error" });
+}
+}
+module.exports = { registerUser, loginUser,logoutController };
