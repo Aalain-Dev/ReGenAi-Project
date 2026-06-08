@@ -1,7 +1,8 @@
 const { tokenblackist } = require("../models/blacklisttoken.model");
+const userModels = require("../models/user.models");
 const userModel = require("../models/user.models");
 const bcrypt = require("bcrypt");
-
+const jwt = require("jsonwebtoken");
 const registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -12,9 +13,10 @@ const registerUser = async (req, res) => {
       });
     }
 
-    const exsistingUser = await userModel.find({
+    const exsistingUser = await userModel.findOne({
       email,
     });
+    console.log(exsistingUser);
     if (exsistingUser) {
       return res
         .status(400)
@@ -37,11 +39,11 @@ const registerUser = async (req, res) => {
       token,
     });
   } catch (e) {
-    console.error("Error registering user:", err);
+    console.error("Error registering user:", e.message);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-const loginUser = (req, res) => {
+const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     if (!email || !password) {
@@ -50,54 +52,71 @@ const loginUser = (req, res) => {
       });
     }
     const User = await userModel.findOne({
-email
-    })
-    if (!User){
+      email
+    });
+    console.log(User)
+    if (!User) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
-    const match =  await bcrypt.compare(password , User.password)
-     if (!match) {
+    const match = await bcrypt.compare(password, User.password);
+    if (!match) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
-     const token = jwt.sign(
-      { id: user._id, username: user.username },
+    const token = jwt.sign(
+      { id: User._id, username: User.username },
       process.env.JWT_SECRET,
       { expiresIn: "1h" },
     );
-    res.cookies("token", token)
-   res.status(200).json({
+    res.cookie("token", token);
+    res.status(200).json({
       message: "user logged in successfully",
       token,
     });
   } catch (e) {
-     console.error("Error logging in user:", err);
+    console.error("Error logging in user:", e.message);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
 
-const logoutController = (req,res)=>{
-  const token = req.cookies.token
+const logoutController = async (req, res) => {
+  const token = req.cookies.token;
 
-if (!token)
-{
-  return res.status(400).json({
-    message:"Token Not Found"
-  })
-}
-try{
-const token_blacklist = await tokenblackist.create({
-  token
-})
-res.clearCookie("token")
-res.status(200).json({
+  if (!token) {
+    return res.status(400).json({
+      message: "Token Not Found",
+    });
+  }
+  try {
+    const token_blacklist = await tokenblackist.create({
+      token,
+    });
+    res.clearCookie("token");
+    res.status(200).json({
       message: "user logged out successfully",
       token,
     });
-
-}
-catch(e){
-  console.error("Error in logging out user:", e);
+  } catch (e) {
+    console.error("Error in logging out user:", e);
     return res.status(500).json({ message: "Internal server error" });
-}
-}
-module.exports = { registerUser, loginUser,logoutController };
+  }
+};
+const getme = async (req, res) => {
+  const user = req.user.id;
+  try {
+    const finduser = await userModel.findById(user);
+    res.status(200).json({
+      message: "user details",
+      user_id: finduser._id,
+      username: finduser.username,
+      email: finduser.email,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        message: "Internal server error from get me controller",
+        error: e.message,
+      });
+  }
+};
+module.exports = { registerUser, loginUser, logoutController, getme };
