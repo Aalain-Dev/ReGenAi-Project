@@ -52,9 +52,9 @@ const loginUser = async (req, res) => {
       });
     }
     const User = await userModel.findOne({
-      email
+      email,
     });
-    console.log(User)
+    console.log(User);
     if (!User) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
@@ -111,12 +111,10 @@ const getme = async (req, res) => {
       email: finduser.email,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Internal server error from get me controller",
-        error: e.message,
-      });
+    res.status(500).json({
+      message: "Internal server error from get me controller",
+      error: e.message,
+    });
   }
 };
 module.exports = { registerUser, loginUser, logoutController, getme };
