@@ -7,9 +7,21 @@ export const register = async ({ username, email, password }) => {
     password,
   };
   const response = await apiClient.post("/api/auth", data);
-  console.log(response);
+  return response.data;
 };
-export const login = () => {};
-export const logout = () => {};
-export const getMe = () => {};
-
+export const login = async ({ email, password }) => {
+  const data = {
+    email,
+    password,
+  };
+  const response = await apiClient.post("/api/auth/login", data);
+  return response.data;
+};
+export const logout = async () => {
+  const response = await apiClient.post("/api/auth/logout");
+  return response.data;
+};
+export const getMe = async () => {
+  const response = await apiClient.get("/api/auth/get-me");
+  return response.data;
+};
