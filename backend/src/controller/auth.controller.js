@@ -100,18 +100,22 @@ const logoutController = async (req, res) => {
 };
 const getme = async (req, res) => {
   const user = req.user.id;
+  console.log("This is User")
+  console.log(user)
   try {
     const finduser = await userModel.findById(user);
     res.status(200).json({
       message: "user details",
-      user_id: finduser._id,
-      username: finduser.username,
-      email: finduser.email,
+      user: {
+        user_id: finduser._id,
+        username: finduser.username,
+        email: finduser.email,
+      },
     });
   } catch (error) {
     res.status(500).json({
       message: "Internal server error from get me controller",
-      error: e.message,
+      error: error.message,
     });
   }
 };

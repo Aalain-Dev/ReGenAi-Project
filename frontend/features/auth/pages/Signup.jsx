@@ -1,21 +1,24 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { useAuth } from "../hooks/auth.hooks";
 
 const Signup = () => {
+  const { handleRegister } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      username: '',
-      email: '',
-      password: '',
+      username: "",
+      email: "",
+      password: "",
     },
   });
 
-  const onSubmit = (data) => {
-    console.log('Signup Data:', data);
+  const onSubmit = async (data) => {
+    const { username, email, password } = data;
+    const response = await handleRegister({ username, email, password });
   };
 
   return (
@@ -30,82 +33,97 @@ const Signup = () => {
           <div className="space-y-4 rounded-md shadow-sm">
             {/* Username Input */}
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Username
               </label>
               <input
                 id="username"
                 type="text"
-                {...register('username', {
-                  required: 'Username is required',
+                {...register("username", {
+                  required: "Username is required",
                   minLength: {
                     value: 3,
-                    message: 'Username must be at least 3 characters',
+                    message: "Username must be at least 3 characters",
                   },
                 })}
                 className={`block w-full rounded-md border px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 sm:text-sm ${
                   errors.username
-                    ? 'border-red-500 focus:border-red-500 focus:ring-red-200'
-                    : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-200"
+                    : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
                 }`}
                 placeholder="johndoe"
               />
               {errors.username && (
-                <p className="mt-1 text-xs text-red-500">{errors.username.message}</p>
+                <p className="mt-1 text-xs text-red-500">
+                  {errors.username.message}
+                </p>
               )}
             </div>
 
             {/* Email Input */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Email address
               </label>
               <input
                 id="email"
                 type="email"
-                {...register('email', {
-                  required: 'Email is required',
+                {...register("email", {
+                  required: "Email is required",
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z0-9]{2,}$/i,
-                    message: 'Invalid email address',
+                    message: "Invalid email address",
                   },
                 })}
                 className={`block w-full rounded-md border px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 sm:text-sm ${
                   errors.email
-                    ? 'border-red-500 focus:border-red-500 focus:ring-red-200'
-                    : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-200"
+                    : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
                 }`}
                 placeholder="you@example.com"
               />
               {errors.email && (
-                <p className="mt-1 text-xs text-red-500">{errors.email.message}</p>
+                <p className="mt-1 text-xs text-red-500">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
             {/* Password Input */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Password
               </label>
               <input
                 id="password"
                 type="password"
-                {...register('password', {
-                  required: 'Password is required',
+                {...register("password", {
+                  required: "Password is required",
                   minLength: {
                     value: 6,
-                    message: 'Password must be at least 6 characters',
+                    message: "Password must be at least 6 characters",
                   },
                 })}
                 className={`block w-full rounded-md border px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 sm:text-sm ${
                   errors.password
-                    ? 'border-red-500 focus:border-red-500 focus:ring-red-200'
-                    : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-200'
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-200"
+                    : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
                 }`}
                 placeholder="••••••••"
               />
               {errors.password && (
-                <p className="mt-1 text-xs text-red-500">{errors.password.message}</p>
+                <p className="mt-1 text-xs text-red-500">
+                  {errors.password.message}
+                </p>
               )}
             </div>
           </div>

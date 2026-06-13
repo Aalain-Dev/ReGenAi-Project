@@ -6,6 +6,6 @@ const authrouter = Router();
 authrouter.post("/register",registerUser);
 authrouter.post("/login",loginUser);
 authrouter.post("/logout",logoutController);
-authrouter.post("/get-me",authmiddleware, getme);
+authrouter.get("/get-me",authmiddleware, getme);
 
 module.exports = authrouter;

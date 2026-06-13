@@ -10,7 +10,6 @@ export const apiClient = axios.create({
 
 apiClient.interceptors.response.use(
   (response) => {
-    console.log("This is Inteceptor")
     console.log("Response: ", response);
     return response;
   },

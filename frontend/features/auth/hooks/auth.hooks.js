@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
-import { logout, register } from "../services/auth.service";
+import { login, logout, register } from "../services/auth.service";
 import { set } from "react-hook-form";
 
 export const useAuth = () => {
@@ -23,12 +23,13 @@ export const useAuth = () => {
   const handlelogin = async ({ email, password }) => {
     setloading(true);
     try {
-      const response = await handlelogin({
+      const response = await login({
         email,
         password,
       });
       setuser(response);
       setloading(false);
+      return response
     } catch (e) {
       setloading(e.message);
     }
@@ -46,6 +47,9 @@ export const useAuth = () => {
   };
 
   return {
+    user,
+    loading,
+    error,
     handleRegister,
     handlelogout,
     handlelogin,

@@ -9,14 +9,14 @@ const authmiddleware = async(req, res, next) => {
     message:"Token Not Found"
   })
 }
-  try {
+  try { 
     const blacklisted = await tokenblackist.findOne({
         token
     })
      if (blacklisted) {
             return res.status(401).json({ message: "Invalid token" });
         } 
-        const decode =  jwt.verify(token,process.env.JWT)
+        const decode =  jwt.verify(token,process.env.JWT_SECRET)
         req.user = decode
         next()
   } catch (e) {

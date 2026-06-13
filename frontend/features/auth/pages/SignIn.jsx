@@ -4,10 +4,12 @@ import { useAuth } from "../hooks/auth.hooks";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { handleRegister } = useAuth();
+  const { handlelogin } = useAuth();
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -15,20 +17,25 @@ const SignIn = () => {
   } = useForm({
     mode: "onTouched",
   });
+
   const onSubmit = async (data) => {
     try {
-      const response = await handleRegister(data);
-      if (response.token) {
+      const response = await handlelogin(data);
+      console.log(response)
+      if (response?.data?.token) {
+        toast.success("Login successful");
         navigate("/home");
+      } else {
+        toast.error("Invalid email or password");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error.message);
     }
   };
 
   return (
     <>
-      <div className=" bg-slate-950 flex items-center justify-center p-4 md:p-6 antialiased selection:bg-indigo-500 selection:text-white">
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 md:p-6 antialiased selection:bg-indigo-500 selection:text-white">
         <div className="w-full max-w-5xl grid lg:grid-cols-12 overflow-hidden rounded-3xl shadow-2xl bg-slate-900/40 border border-slate-800 backdrop-blur-md">
           {/* Left Side */}
           <div className="hidden lg:flex lg:col-span-5 flex-col justify-between p-12 text-white relative bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 border-r border-slate-800">
@@ -36,11 +43,13 @@ const SignIn = () => {
               <span className="text-indigo-400 font-bold tracking-wider text-xs uppercase">
                 Authentication System
               </span>
+
               <h1 className="mt-6 text-5xl font-extrabold leading-tight tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
                 Welcome
                 <br />
                 Back.
               </h1>
+
               <p className="mt-6 text-slate-400 text-sm leading-relaxed font-medium">
                 Access your dashboard, manage projects, track KPIs, monitor
                 performance and collaborate with your team.
@@ -61,9 +70,11 @@ const SignIn = () => {
                 <div className="w-14 h-14 mx-auto rounded-2xl bg-indigo-600 flex items-center justify-center text-white text-xl font-black shadow-lg shadow-indigo-600/20">
                   A
                 </div>
+
                 <h2 className="mt-6 text-3xl font-extrabold text-slate-900 tracking-tight">
                   Sign In
                 </h2>
+
                 <p className="mt-2 text-sm font-medium text-slate-500">
                   Enter your credentials below
                 </p>
@@ -74,41 +85,21 @@ const SignIn = () => {
                 className="space-y-5"
                 noValidate
               >
-                {/* Username */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold tracking-wide uppercase text-slate-700">
-                    Username
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="johndoe"
-                    {...register("username", {
-                      required: "Username is required",
-                    })}
-                    className={`w-full rounded-xl border px-4 py-2.5 text-sm font-medium outline-none transition-all focus:bg-white focus:ring-4 ${
-                      errors.username
-                        ? "border-red-300 bg-red-50/10 focus:ring-red-500/10 focus:border-red-500"
-                        : "border-slate-200 bg-slate-50/50 focus:ring-indigo-600/10 focus:border-indigo-600"
-                    }`}
-                  />
-                  {errors.username && (
-                    <p className="text-red-600 text-xs font-semibold mt-1 flex items-center gap-1">
-                      <span className="w-1 h-1 rounded-full bg-red-600 inline-block" />
-                      {errors.username.message}
-                    </p>
-                  )}
-                </div>
-
                 {/* Email */}
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold tracking-wide uppercase text-slate-700">
                     Email Address
                   </label>
+
                   <input
                     type="email"
                     placeholder="john@example.com"
                     {...register("email", {
                       required: "Email is required",
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Please enter a valid email address",
+                      },
                     })}
                     className={`w-full rounded-xl border px-4 py-2.5 text-sm font-medium outline-none transition-all focus:bg-white focus:ring-4 ${
                       errors.email
@@ -116,6 +107,7 @@ const SignIn = () => {
                         : "border-slate-200 bg-slate-50/50 focus:ring-indigo-600/10 focus:border-indigo-600"
                     }`}
                   />
+
                   {errors.email && (
                     <p className="text-red-600 text-xs font-semibold mt-1 flex items-center gap-1">
                       <span className="w-1 h-1 rounded-full bg-red-600 inline-block" />
@@ -130,19 +122,25 @@ const SignIn = () => {
                     <label className="text-xs font-bold tracking-wide uppercase text-slate-700">
                       Password
                     </label>
+
                     <button
                       type="button"
                       className="text-xs font-bold text-indigo-600 hover:text-indigo-700 transition"
                     >
-                      Forgot?
+                      Forgot Password?
                     </button>
                   </div>
+
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}
                       placeholder="••••••••"
                       {...register("password", {
                         required: "Password is required",
+                        minLength: {
+                          value: 6,
+                          message: "Password must be at least 6 characters",
+                        },
                       })}
                       className={`w-full pl-4 pr-11 py-2.5 rounded-xl border text-sm font-medium outline-none transition-all focus:bg-white focus:ring-4 ${
                         errors.password
@@ -150,15 +148,17 @@ const SignIn = () => {
                           : "border-slate-200 bg-slate-50/50 focus:ring-indigo-600/10 focus:border-indigo-600"
                       }`}
                     />
+
                     <button
                       type="button"
-                      onClick={() => setShowPassword(!showPassword)}
+                      onClick={() => setShowPassword((prev) => !prev)}
                       className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-xs font-bold text-slate-400 hover:text-slate-600 transition"
                       tabIndex={-1}
                     >
                       {showPassword ? "Hide" : "Show"}
                     </button>
                   </div>
+
                   {errors.password && (
                     <p className="text-red-600 text-xs font-semibold mt-1 flex items-center gap-1">
                       <span className="w-1 h-1 rounded-full bg-red-600 inline-block" />
@@ -204,7 +204,10 @@ const SignIn = () => {
 
               <div className="mt-8 pt-6 text-center text-sm text-slate-500 font-medium border-t border-slate-100">
                 Don't have an account?{" "}
-                <button className="font-bold text-indigo-600 hover:text-indigo-700 transition">
+                <button
+                  type="button"
+                  className="font-bold text-indigo-600 hover:text-indigo-700 transition"
+                >
                   Create Account
                 </button>
               </div>
@@ -212,6 +215,7 @@ const SignIn = () => {
           </div>
         </div>
       </div>
+
       <ToastContainer
         position="top-right"
         autoClose={3000}
