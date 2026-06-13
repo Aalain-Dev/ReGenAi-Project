@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 const registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-
     if (!username || !email || !password) {
       return res.status(400).json({
         message: "Fields Not Found",
@@ -16,7 +15,6 @@ const registerUser = async (req, res) => {
     const exsistingUser = await userModel.findOne({
       email,
     });
-    console.log(exsistingUser);
     if (exsistingUser) {
       return res
         .status(400)
@@ -29,7 +27,7 @@ const registerUser = async (req, res) => {
       password: hash,
     });
     const token = jwt.sign(
-      { id: user._id, username: createuser.username },
+      { id: createuser._id, username: createuser.username },
       process.env.JWT_SECRET,
       { expiresIn: "1h" },
     );

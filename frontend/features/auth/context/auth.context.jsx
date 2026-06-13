@@ -1,10 +1,11 @@
 import React, { createContext, useState } from "react";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setuser] = useState("");
   const [loading, setloading] = useState("");
+  const [error, seterror] = useState("");
   return (
     <AuthContext.Provider
       value={{
@@ -12,6 +13,8 @@ const AuthProvider = ({ children }) => {
         setuser,
         loading,
         setloading,
+        error,
+        seterror,
       }}
     >
       {children}

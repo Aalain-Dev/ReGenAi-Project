@@ -7,6 +7,7 @@ import SignIn from "../features/auth/pages/SignIn";
 import Signup from "../features/auth/pages/Signup";
 import Home from "../features/auth/pages/Home";
 import Interview from "../features/interview/pages/Interview";
+import Protected from "../features/auth/pages/Protected";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -17,8 +18,12 @@ function App() {
         <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/home" element={<Interview />} />
+          {/* <Route element = {
+            <Protected/>
+          }> */}
+            <Route path="/home" element={<Home />} />
+            <Route path="/interview" element={<Interview />} />
+          {/* </Route> */}
         </Routes>
       </AuthProvider>
     </>

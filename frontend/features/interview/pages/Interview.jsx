@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from "react";
 
 const Interview = () => {
-  return (
-    <div>Interview</div>
-  )
-}
+  console.log(user)
+  return <div>Interview
+   
+  </div>;
+};
 
-export default Interview
+export default Interview;
