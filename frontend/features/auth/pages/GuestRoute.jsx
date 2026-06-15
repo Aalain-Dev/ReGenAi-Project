@@ -6,7 +6,6 @@ import { Navigate, Outlet } from "react-router-dom";
 // If the user is ALREADY logged in, keep them out and send them to /home.
 const GuestRoute = () => {
   const { user, loading } = useAuth();
-
   // Wait until getMe() has resolved before deciding.
   if (loading) return <p>Checking Auth...</p>;
 

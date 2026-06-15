@@ -285,6 +285,7 @@ async function generateInterviewReport({
 
   try {
     const parsed = JSON.parse(response.text);
+    console.log(parsed)
     return interviewReportSchema.parse(parsed);
   } catch (err) {
     console.error("Failed to parse/validate Gemini response:", response.text);

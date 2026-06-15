@@ -20,16 +20,13 @@ const SignIn = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await handlelogin(data);
-      console.log(response)
-      if (response?.data?.token) {
-        toast.success("Login successful");
-        navigate("/home");
-      } else {
-        toast.error("Invalid email or password");
-      }
+      await handlelogin(data); // throws if the credentials are wrong
+      toast.success("Login successful");
+      navigate("/home");
     } catch (error) {
-      console.error(error.message);
+      toast.error(
+        error?.response?.data?.message || "Invalid email or password",
+      );
     }
   };
 
