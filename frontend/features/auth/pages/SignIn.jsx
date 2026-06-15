@@ -32,59 +32,20 @@ const SignIn = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4 md:p-6 antialiased selection:bg-indigo-500 selection:text-white">
-        <div className="w-full max-w-5xl grid lg:grid-cols-12 overflow-hidden rounded-3xl shadow-2xl bg-slate-900/40 border border-slate-800 backdrop-blur-md">
-          {/* Left Side */}
-          <div className="hidden lg:flex lg:col-span-5 flex-col justify-between p-12 text-white relative bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 border-r border-slate-800">
-            <div>
-              <span className="text-indigo-400 font-bold tracking-wider text-xs uppercase">
-                Authentication System
-              </span>
-
-              <h1 className="mt-6 text-5xl font-extrabold leading-tight tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
-                Welcome
-                <br />
-                Back.
-              </h1>
-
-              <p className="mt-6 text-slate-400 text-sm leading-relaxed font-medium">
-                Access your dashboard, manage projects, track KPIs, monitor
-                performance and collaborate with your team.
-              </p>
-            </div>
-
-            <div className="flex gap-2">
-              <div className="h-2 w-2 rounded-full bg-indigo-500 animate-pulse"></div>
-              <div className="h-2 w-2 rounded-full bg-indigo-500/60"></div>
-              <div className="h-2 w-2 rounded-full bg-indigo-500/30"></div>
-            </div>
-          </div>
+     
 
           {/* Right Side */}
-          <div className="bg-white lg:col-span-7 p-8 sm:p-12 lg:p-16 flex items-center">
-            <div className="w-full max-w-md mx-auto">
-              <div className="text-center mb-8">
-                <div className="w-14 h-14 mx-auto rounded-2xl bg-indigo-600 flex items-center justify-center text-white text-xl font-black shadow-lg shadow-indigo-600/20">
-                  A
-                </div>
-
-                <h2 className="mt-6 text-3xl font-extrabold text-slate-900 tracking-tight">
-                  Sign In
-                </h2>
-
-                <p className="mt-2 text-sm font-medium text-slate-500">
-                  Enter your credentials below
-                </p>
-              </div>
-
+          {/* <div className="mt-10 flex items-center"> */}
+            <div className="w-full ">
+            
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="space-y-5"
+                className="w-full"
                 noValidate
               >
                 {/* Email */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold tracking-wide uppercase text-slate-700">
+                <div className="space-y-1.5 ">
+                  <label className="text-xs    font-bold tracking-wide uppercase text-white">
                     Email Address
                   </label>
 
@@ -98,7 +59,7 @@ const SignIn = () => {
                         message: "Please enter a valid email address",
                       },
                     })}
-                    className={`w-full rounded-xl border px-4 py-2.5 text-sm font-medium outline-none transition-all focus:bg-white focus:ring-4 ${
+                    className={`w-full rounded-xl border px-4 mt-4 py-2.5 text-sm font-medium outline-none transition-all focus:bg-white focus:ring-4 ${
                       errors.email
                         ? "border-red-300 bg-red-50/10 focus:ring-red-500/10 focus:border-red-500"
                         : "border-slate-200 bg-slate-50/50 focus:ring-indigo-600/10 focus:border-indigo-600"
@@ -116,16 +77,11 @@ const SignIn = () => {
                 {/* Password */}
                 <div className="space-y-1.5">
                   <div className="flex justify-between items-center">
-                    <label className="text-xs font-bold tracking-wide uppercase text-slate-700">
+                    <label className="text-xs mt-5 font-bold tracking-wide uppercase text-white">
                       Password
                     </label>
 
-                    <button
-                      type="button"
-                      className="text-xs font-bold text-indigo-600 hover:text-indigo-700 transition"
-                    >
-                      Forgot Password?
-                    </button>
+                  
                   </div>
 
                   <div className="relative">
@@ -139,7 +95,7 @@ const SignIn = () => {
                           message: "Password must be at least 6 characters",
                         },
                       })}
-                      className={`w-full pl-4 pr-11 py-2.5 rounded-xl border text-sm font-medium outline-none transition-all focus:bg-white focus:ring-4 ${
+                      className={`w-full pl-4 pr-11 py-2.5 mb-4 rounded-xl border text-sm font-medium outline-none transition-all focus:bg-white focus:ring-4 ${
                         errors.password
                           ? "border-red-300 bg-red-50/10 focus:ring-red-500/10 focus:border-red-500"
                           : "border-slate-200 bg-slate-50/50 focus:ring-indigo-600/10 focus:border-indigo-600"
@@ -168,7 +124,7 @@ const SignIn = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full mt-2 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm transition-all shadow-md shadow-indigo-600/10 hover:shadow-lg hover:shadow-indigo-600/20 active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2"
+                  className="w-full mt-2 cursor-pointer py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm transition-all shadow-md shadow-indigo-600/10 hover:shadow-lg hover:shadow-indigo-600/20 active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2"
                 >
                   {isSubmitting ? (
                     <>
@@ -191,7 +147,7 @@ const SignIn = () => {
                           d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
                         />
                       </svg>
-                      <span>Signing In...</span>
+                      <span >Signing In...</span>
                     </>
                   ) : (
                     "Sign In"
@@ -199,19 +155,9 @@ const SignIn = () => {
                 </button>
               </form>
 
-              <div className="mt-8 pt-6 text-center text-sm text-slate-500 font-medium border-t border-slate-100">
-                Don't have an account?{" "}
-                <button
-                  type="button"
-                  className="font-bold text-indigo-600 hover:text-indigo-700 transition"
-                >
-                  Create Account
-                </button>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
+          {/* </div> */}
+       
 
       <ToastContainer
         position="top-right"

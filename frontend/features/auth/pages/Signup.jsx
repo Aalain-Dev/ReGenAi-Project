@@ -22,26 +22,19 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-md">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-            Create your account
-          </h2>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <div className="space-y-4 rounded-md shadow-sm">
-            {/* Username Input */}
+   
+        <form className="mt-8 w-full"  onSubmit={handleSubmit(onSubmit)}>
+          <div className=" rounded-md shadow-sm">
             <div>
               <label
                 htmlFor="username"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-white mb-2"
               >
                 Username
               </label>
               <input
                 id="username"
-                type="text"
+                type="text" 
                 {...register("username", {
                   required: "Username is required",
                   minLength: {
@@ -49,7 +42,7 @@ const Signup = () => {
                     message: "Username must be at least 3 characters",
                   },
                 })}
-                className={`block w-full rounded-md border px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 sm:text-sm ${
+                className={`block w-full rounded-md border px-3 py-2 text-gray-900 mb-2  focus:outline-none focus:ring-2 sm:text-sm ${
                   errors.username
                     ? "border-red-500 focus:border-red-500 focus:ring-red-200"
                     : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
@@ -57,7 +50,7 @@ const Signup = () => {
                 placeholder="johndoe"
               />
               {errors.username && (
-                <p className="mt-1 text-xs text-red-500">
+                <p className="mt-1 text-xs text-red-500 mb-2">
                   {errors.username.message}
                 </p>
               )}
@@ -67,7 +60,7 @@ const Signup = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-white mb-2"
               >
                 Email address
               </label>
@@ -81,7 +74,7 @@ const Signup = () => {
                     message: "Invalid email address",
                   },
                 })}
-                className={`block w-full rounded-md border px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 sm:text-sm ${
+                className={`block w-full rounded-md border px-3 py-2 mb-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 sm:text-sm ${
                   errors.email
                     ? "border-red-500 focus:border-red-500 focus:ring-red-200"
                     : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
@@ -89,7 +82,7 @@ const Signup = () => {
                 placeholder="you@example.com"
               />
               {errors.email && (
-                <p className="mt-1 text-xs text-red-500">
+                <p className="mt-1 text-xs text-red-500 mb-2">
                   {errors.email.message}
                 </p>
               )}
@@ -99,7 +92,7 @@ const Signup = () => {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-white mb-2"
               >
                 Password
               </label>
@@ -113,7 +106,7 @@ const Signup = () => {
                     message: "Password must be at least 6 characters",
                   },
                 })}
-                className={`block w-full rounded-md border px-3 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 sm:text-sm ${
+                className={`block w-full rounded-md mb-2 border px-3 py-2 text-gray-900  focus:outline-none focus:ring-2 sm:text-sm ${
                   errors.password
                     ? "border-red-500 focus:border-red-500 focus:ring-red-200"
                     : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-200"
@@ -137,8 +130,7 @@ const Signup = () => {
             </button>
           </div>
         </form>
-      </div>
-    </div>
+  
   );
 };
 

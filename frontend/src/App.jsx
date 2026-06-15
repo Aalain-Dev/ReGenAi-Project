@@ -9,6 +9,7 @@ import Home from "../features/auth/pages/Home";
 import Interview from "../features/interview/pages/Interview";
 import Protected from "../features/auth/pages/Protected";
 import GuestRoute from "../features/auth/pages/GuestRoute";
+import AuthMain from "../features/auth/pages/AuthMain";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -18,10 +19,11 @@ function App() {
       <AuthProvider>
         <Routes>
           {/* Guest-only: a logged-in user gets bounced to /home */}
-          <Route element={<GuestRoute />}>
+          {/* <Route element={<GuestRoute />}> */}
             <Route path="/" element={<SignIn />} />
             <Route path="/signup" element={<Signup />} />
-          </Route>
+            <Route path="/main" element={<AuthMain />} />
+          {/* </Route> */}
 
           {/* Protected: a logged-out user gets bounced to / (login) */}
           <Route element={<Protected />}>
