@@ -9,9 +9,9 @@ const AuthMain = () => {
   const [value, setvalue] = useState(false);
   return (
     <>
-      <div className=" flex bg h-fit">
+      <div className=" flex bg h-screen">
         {/* Left Side */}
-        <div className="w-1/2 bg-[#0D0D15] h-fit  p-4">
+        <div className="w-1/2 bg-[#0D0D15]   p-4">
           <div className="bar">
             <p className="font-color text-2xl font-bold">CareerAI</p>
 
@@ -23,7 +23,7 @@ const AuthMain = () => {
               The precision of neural networks meets professional growth.
               Navigate your career path with data-driven confidence.
             </p>
-            <div className="cards-section flex justify-center gap-10 items-center ">
+            <div className="cards-section flex mt-10 justify-center gap-10 items-center ">
               <div className="card bg-[#1a1a1a] w-[45%] border-2 border-[#ffffff88] px-5 py-5 flex flex-col items-start rounded-2xl">
                 <p className="text-white uppercase">Resume Score</p>
                 <p className="text-white mt-5 ">
@@ -87,11 +87,3 @@ const AuthMain = () => {
 };
 
 export default AuthMain;
-
-// Lekha
-// - otp study for forgot password 
-// - sign and signup proper Ui
-// -                        
-
-
-// Aalain

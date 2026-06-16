@@ -19,11 +19,10 @@ function App() {
       <AuthProvider>
         <Routes>
           {/* Guest-only: a logged-in user gets bounced to /home */}
-          {/* <Route element={<GuestRoute />}> */}
-            <Route path="/" element={<SignIn />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/main" element={<AuthMain />} />
-          {/* </Route> */}
+          <Route element={<GuestRoute />}>
+        
+            <Route path="/" element={<AuthMain />} />
+          </Route>
 
           {/* Protected: a logged-out user gets bounced to / (login) */}
           <Route element={<Protected />}>

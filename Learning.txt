@@ -1,0 +1,19 @@
+Learning in Backed 
+
+1. Learnign of the auth system working
+2. how to store the jwt in cookies frm backend
+3. how to do make a middelware propely 
+4. token blacklisting concept 
+5. implementing the groq and openrouter keys for the model fallback 
+
+
+Steps impkemneting the groq and openai
+1. npm install groq-sdk
+2. npm install openai
+
+
+Learnign in frontend  
+
+1. 4 layer architecture 
+2. use case of the with credetials in apibase for storing cookies 
+3. hooks,   
