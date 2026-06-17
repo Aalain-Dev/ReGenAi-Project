@@ -10,7 +10,7 @@ const GuestRoute = () => {
   if (loading) return <p>Checking Auth...</p>;
 
   // Already logged in → don't allow login/signup again.
-  if (user) return <Navigate to="/home" replace />;
+  if (user) return <Navigate to="/dashboard/home" replace />;
 
   // Not logged in → show the login/signup page.
   return <Outlet />;

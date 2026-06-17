@@ -7,7 +7,7 @@ Learning in Backed
 5. implementing the groq and openrouter keys for the model fallback 
 
 
-Steps impkemneting the groq and openai
+Steps implementing the groq and openai
 1. npm install groq-sdk
 2. npm install openai
 
