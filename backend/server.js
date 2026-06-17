@@ -10,7 +10,7 @@ const generateInterviewReportOpenRouter = require("./src/services/openrouter.ser
 const generateInterviewReportGroq = require("./src/services/groq.service.js");
 const generateInterviewReportGemini = require("./src/services/gemini.service.js");
 // generateInterviewReportGemini({
-//   resmune,
+//   resmune,   
 //   jobDescription,
 //   selfDescription,
 // });
