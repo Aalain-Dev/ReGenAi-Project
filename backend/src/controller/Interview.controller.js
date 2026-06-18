@@ -1,8 +1,8 @@
 const pdfParse = require("pdf-parse");
 const generateInterviewReportGroq = require("../services/groq.service");
-const interviewreportschema = require("../models/interview.model")
-const generatereport = async(req,res) => {
-     try {
+const interviewreportschema = require("../models/interview.model");
+const generatereport = async (req, res) => {
+  try {
     if (!req.file) {
       return res.status(400).json({ message: "Resume file is required" });
     }
@@ -12,7 +12,7 @@ const generatereport = async(req,res) => {
     const resume =
       typeof parsed === "string"
         ? parsed
-        : (parsed?.text ??       
+        : (parsed?.text ??
           (Array.isArray(parsed?.pages)
             ? parsed.pages.map((p) => p.text).join("\n\n")
             : ""));
@@ -44,26 +44,25 @@ const generatereport = async(req,res) => {
   }
 };
 
-const getsinglereport = async(req,res) => {
-  const { id } = req.params
-  const userid = req.user.id
- try{
-   const interviewreport = await interviewreportschema.findOne({
-       user: userid,
+const getsinglereport = async (req, res) => {
+  const { id } = req.params;
+  const userid = req.user.id;
+  try {
+    const interviewreport = await interviewreportschema.findOne({
+      user: userid,
       _id: id,
-  })
-   return res
+    });
+    return res
       .status(200)
       .json({ message: "report fetched", data: interviewreport });
- }
- catch(e){
-  return res
+  } catch (e) {
+    return res
       .status(500)
       .json({ message: `error in fetching report ${error.message}` });
   }
 };
-const getallreports = async(req,res) => {
-     try {
+const getallreports = async (req, res) => {
+  try {
     const userid = req.user.id;
 
     const interviewreports = await interviewreportschema
@@ -85,7 +84,6 @@ const getallreports = async(req,res) => {
 
 module.exports = {
   generatereport,
-  getsinglereport
-  ,
-  getallreports
+  getsinglereport,
+  getallreports,
 };
