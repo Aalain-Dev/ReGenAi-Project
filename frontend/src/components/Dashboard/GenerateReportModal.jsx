@@ -1,21 +1,25 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import InterviewHook from "../../../features/interview/hooks/interview.hooks";
 
 const GenerateReportModal = ({ isOpen, onClose }) => {
-  const {
-    register,
-    handleSubmit,
-  } = useForm();
+  const { register, handleSubmit } = useForm();
+ const {GenerateReporthook} = InterviewHook()
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     const formData = new FormData();
 
     formData.append("resume", data.resume[0]);
     formData.append("jobDescription", data.jobDescription);
     formData.append("selfDescription", data.selfDescription);
-
-    console.log(data);
-    // axios.post("/api/interview-report", formData);
+    
+    const response = await GenerateReporthook({
+      resume:data.resume,
+      jobdescription:data.jobDescription,
+      selfdescription:data.selfDescription
+    }) 
+    console.log(response)
+    // return 
   };
 
   if (!isOpen) return null;
@@ -23,12 +27,9 @@ const GenerateReportModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
       <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl">
-        
         {/* Header */}
         <div className="flex items-center justify-between border-b px-6 py-4">
-          <h2 className="text-2xl font-bold">
-            Analyze Resume
-          </h2>
+          <h2 className="text-2xl font-bold">Analyze Resume</h2>
 
           <button
             onClick={onClose}
@@ -39,10 +40,7 @@ const GenerateReportModal = ({ isOpen, onClose }) => {
         </div>
 
         {/* Form */}
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="space-y-5 p-6"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 p-6">
           {/* Resume Upload */}
           <div>
             <label className="mb-2 block text-sm font-semibold text-gray-700">

@@ -9,9 +9,10 @@ import AuthMain from "../features/auth/pages/AuthMain";
 import DashboardLayout from "./components/Dashboard/DashboardLayout";
 import Home from "./components/Dashboard/Home";
 import Reports from "./components/Dashboard/Reports";
+import { InterviewContextProvider } from "../features/interview/context/Interview.context";
+import ReportDetail from "./components/Dashboard/ReportDetail";
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <>
@@ -23,11 +24,18 @@ function App() {
           </Route>
 
           {/* Protected: a logged-out user gets bounced to / (login) */}
-          <Route element={<Protected />}>
+          <Route
+            element={
+              <InterviewContextProvider>
+                <Protected />
+              </InterviewContextProvider>
+            }
+          >
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route path="home" element={<Home />} />
               <Route path="reports" element={<Reports />} />
-            </Route>
+              <Route path="reports/:id" element={<ReportDetail />} />
+            </Route>  
           </Route>
         </Routes>
       </AuthProvider>
