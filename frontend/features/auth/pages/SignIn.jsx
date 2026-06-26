@@ -38,7 +38,7 @@ const SignIn = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
           {/* Email */}
           <div className="space-y-1.5 ">
-            <label className="text-xs    font-bold tracking-wide uppercase text-white">
+            <label className="text-xs    font-bold tracking-wide capitalize text-black">
               Email Address
             </label>
 
@@ -70,7 +70,7 @@ const SignIn = () => {
           {/* Password */}
           <div className="space-y-1.5">
             <div className="flex justify-between items-center">
-              <label className="text-xs mt-5 font-bold tracking-wide uppercase text-white">
+              <label className="text-xs mt-5 font-bold tracking-wide capitalize text-black">
                 Password
               </label>
             </div>
@@ -115,7 +115,7 @@ const SignIn = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="group relative flex  w-full justify-center rounded-md bg-[#C0C1FF] px-3 py-2 text-sm font-semibold text-black hover:text-white hover:bg-[#353434] cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors duration-200"
+            className="group relative flex  w-full justify-center rounded-md bg-black text-white px-3 py-2 text-sm font-semibold text-black hover:text-white hover:bg-[#353434] cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition-colors duration-200"
           >
             {isSubmitting ? (
               <>

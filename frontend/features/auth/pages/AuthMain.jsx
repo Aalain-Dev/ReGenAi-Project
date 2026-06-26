@@ -1,88 +1,110 @@
 import React, { useState } from "react";
-import ai_advice from "../../../src/assets/auth/ai_advice.png";
-import roadmap from "../../../src/assets/auth/roadmap.png";
-import skill_gap from "../../../src/assets/auth/skill_gap.png";
-import ats_score from "../../../src/assets/auth/ats_score.png";
 import SignIn from "./SignIn";
 import Signup from "./Signup";
+
 const AuthMain = () => {
   const [value, setvalue] = useState(false);
+
   return (
-    <>
-      <div className=" flex bg h-screen">
-        {/* Left Side */}
-        <div className="w-1/2 bg-[#0D0D15]   p-4">
-          <div className="bar">
-            <p className="font-color text-2xl font-bold">CareerAI</p>
+    <div className="min-h-screen flex flex-col lg:flex-row">
+      {/* Left Side */}
+      <div className="w-full lg:w-1/2 bg-[#0D0D15] p-6 md:p-8 lg:p-10">
+        <div>
+          <h1 className="text-3xl md:text-4xl font-bold text-white">
+            SkillGrowth
+          </h1>
 
-            <h1 className="text-white text-5xl mt-10 font-bold">
-              Unlock Your <span className="font-color">Career Potential</span>{" "}
-              with AI
-            </h1>
-            <p className="text-[#C7C4D7] mt-10 capitalize">
-              The precision of neural networks meets professional growth.
-              Navigate your career path with data-driven confidence.
-            </p>
-            <div className="cards-section flex mt-10 justify-center gap-10 items-center ">
-              <div className="card bg-[#1a1a1a] w-[45%] border-2 border-[#ffffff88] px-5 py-5 flex flex-col items-start rounded-2xl">
-                <p className="text-white uppercase">Resume Score</p>
-                <p className="text-white mt-5 ">
-                  <span className="font-color text-4xl font-bold">92 </span>/100
-                </p>
-                <p className="bg-[#34343b] text-white mt-5 py-1.5 px-2 border-white border-[1.2px] text-center rounded-3xl text-[13px] ">
-                  ATS Compatible{" "}
-                </p>
-              </div>
-              <div className="card bg-[#1a1a1a] w-[45%]  border-2 border-[#ffffff88] px-5 py-5 flex flex-col items-start rounded-2xl">
-                <p className="text-white">TOP SKILLS MATCH</p>
-                <p className="bg-[#292930] py-1.2 px-2 py-1 text-[13px] mt-3 rounded-2xl text-white">
-                  Product Strategy
-                </p>
-                <p className="bg-[#292930] py-1.2 px-2 py-1 text-[13px] mt-3 rounded-2xl text-white">
-                  Neural Networks{" "}
-                </p>
-                <p className="bg-[#292930] py-1.2 px-2 py-1 text-[13px] mt-3 rounded-2xl text-white">
-                  System Design{" "}
-                </p>
-              </div>
+          <h1 className="text-white text-4xl md:text-5xl lg:text-6xl mt-8 md:mt-10 font-bold leading-tight">
+            Transform Your Resume Into Interview Success
+          </h1>
+
+          <p className="text-[#C7C4D7] mt-6 md:mt-8 text-sm md:text-base leading-relaxed">
+            Leverage AI to analyze your experience against real job
+            requirements. Discover missing skills, practice targeted interview
+            questions, and follow a customized preparation plan designed to help
+            you stand out.
+          </p>
+
+          {/* Cards */}
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Card 1 */}
+            <div className="bg-[#1a1a1a] border-2 border-[#ffffff88] px-5 py-5 rounded-2xl">
+              <p className="text-white uppercase text-sm md:text-base">
+                Resume Score
+              </p>
+
+              <p className="text-white mt-5">
+                <span className="text-4xl md:text-5xl font-bold">92</span>
+                <span className="text-lg md:text-xl"> /100</span>
+              </p>
+
+              <p className="inline-block bg-[#34343b] text-white mt-5 py-2 px-4 border border-white rounded-3xl text-xs md:text-sm">
+                ATS Compatible
+              </p>
             </div>
-          </div>
-        </div>
 
-        <div className="w-1/2 bg-[#1f1f27] p-4">
-          <div className="flex items-center justify-center">
-            <div className="form mt-10 bg-[#0D0D15] px-10 w-[80%] flex items-center justify-center flex-col rounded-2xl pt-10 pb-10">
-              <p className="text-white text-2xl">Welcome Back</p>
-              <div className="flex gap-10 mt-10 flex-row w-full items-center ">
-                <p
-                  className={`px-2 py-2 rounded-[10px] w-full cursor-pointer font-semibold text-[15px] text-center transition-all ${
-                    value ? "text-white" : "bg-white text-black"
-                  }`}
-                  onClick={() => {
-                    setvalue(!value);
-                  }}
-                >
-                  Sign In
-                </p>
-                <p
-                  className={`px-2 py-2 rounded-[10px] w-full cursor-pointer font-semibold text-[15px] text-center transition-all ${
-                    value
-                      ? "bg-white text-black" // Classes applied when isActive is true
-                      : "text-white" // Classes applied when isActive is false
-                  }`}
-                  onClick={() => {
-                    setvalue(!value);
-                  }}
-                >
-                  Sign Up
-                </p>
+            {/* Card 2 */}
+            <div className="bg-[#1a1a1a] border-2 border-[#ffffff88] px-5 py-5 rounded-2xl">
+              <p className="text-white uppercase text-sm md:text-base">
+                Top Skills Match
+              </p>
+
+              <div className="flex flex-wrap gap-3 mt-4">
+                <span className="bg-[#292930] px-3 py-2 text-xs md:text-sm rounded-2xl text-white">
+                  Product Strategy
+                </span>
+
+                <span className="bg-[#292930] px-3 py-2 text-xs md:text-sm rounded-2xl text-white">
+                  Neural Networks
+                </span>
+
+                <span className="bg-[#292930] px-3 py-2 text-xs md:text-sm rounded-2xl text-white">
+                  System Design
+                </span>
               </div>
-              {value ? <Signup/> : <SignIn />}
             </div>
           </div>
         </div>
       </div>
-    </>
+
+      {/* Right Side */}
+      <div className="w-full lg:w-1/2 p-4 md:p-6 lg:p-8 flex items-center justify-center bg-white">
+        <div className="shadow-lg px-6 md:px-8 lg:px-10 py-8 w-full max-w-md rounded-2xl">
+          <p className="text-black text-2xl md:text-3xl font-semibold">
+            Welcome Back
+          </p>
+
+          <p className="text-black mt-4 text-sm md:text-base">
+            Access your growth dashboard and competency matrix.
+          </p>
+
+          {/* Tabs */}
+          <div className="flex gap-3 mt-8 w-full">
+            <button
+              className={`px-4 py-3 rounded-xl w-full cursor-pointer font-semibold text-sm md:text-base transition-all ${
+                !value ? "text-white bg-black" : "bg-gray-100 text-black"
+              }`}
+              onClick={() => setvalue(false)}
+            >
+              Sign In
+            </button>
+
+            <button
+              className={`px-4 py-3 rounded-xl w-full cursor-pointer font-semibold text-sm md:text-base transition-all ${
+                value ? "text-white bg-black" : "bg-gray-100 text-black"
+              }`}
+              onClick={() => setvalue(true)}
+            >
+              Sign Up
+            </button>
+          </div>
+
+          <div className="mt-6">
+            {value ? <Signup /> : <SignIn />}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
