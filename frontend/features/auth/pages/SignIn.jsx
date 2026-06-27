@@ -38,7 +38,7 @@ const SignIn = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="w-full" noValidate>
           {/* Email */}
           <div className="space-y-1.5 ">
-            <label className="text-xs    font-bold tracking-wide capitalize text-black">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Email Address
             </label>
 
@@ -70,7 +70,7 @@ const SignIn = () => {
           {/* Password */}
           <div className="space-y-1.5">
             <div className="flex justify-between items-center">
-              <label className="text-xs mt-5 font-bold tracking-wide capitalize text-black">
+              <label className="block text-sm font-medium text-gray-700 mb-2 mt-2">
                 Password
               </label>
             </div>
@@ -86,7 +86,7 @@ const SignIn = () => {
                     message: "Password must be at least 6 characters",
                   },
                 })}
-                className={`w-full pl-4 pr-11 py-2.5 mb-4 rounded-xl border text-sm font-medium outline-none transition-all focus:bg-white focus:ring-4 ${
+                className={`w-full pl-4 pr-11 py-2.5 rounded-xl border text-sm font-medium outline-none transition-all focus:bg-white focus:ring-4 ${
                   errors.password
                     ? "border-red-300 bg-red-50/10 focus:ring-red-500/10 focus:border-red-500"
                     : "border-slate-200 bg-slate-50/50 focus:ring-indigo-600/10 focus:border-indigo-600"
@@ -104,7 +104,7 @@ const SignIn = () => {
             </div>
 
             {errors.password && (
-              <p className="text-red-600 text-xs font-semibold mt-1 flex items-center gap-1">
+              <p className="text-red-600 text-xs font-semibold  mb-3 flex items-center gap-1 ">
                 <span className="w-1 h-1 rounded-full bg-red-600 inline-block" />
                 {errors.password.message}
               </p>
