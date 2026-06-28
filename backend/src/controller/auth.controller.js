@@ -37,7 +37,6 @@ const registerUser = async (req, res) => {
       token,
     });
   } catch (e) {
-    console.error("Error registering user:", e.message);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -52,7 +51,6 @@ const loginUser = async (req, res) => {
     const User = await userModel.findOne({
       email,
     });
-    console.log(User);
     if (!User) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
@@ -71,7 +69,6 @@ const loginUser = async (req, res) => {
       token,
     });
   } catch (e) {
-    console.error("Error logging in user:", e.message);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -94,7 +91,6 @@ const logoutController = async (req, res) => {
       token,
     });
   } catch (e) {
-    console.error("Error in logging out user:", e);
     return res.status(500).json({ message: "Internal server error" });
   }
 };

@@ -85,18 +85,11 @@ async function callOpenRouterWithRetry(
         }
 
         if (attempt === maxAttempts) {
-          console.warn(
-            `OpenRouter model "${model}" exhausted ${maxAttempts} attempts. Falling back to next model.`,
-          );
           break;
         }
 
         const backoff = baseDelayMs * 2 ** (attempt - 1);
         const jitter = Math.floor(Math.random() * 250);
-
-        console.warn(
-          `OpenRouter transient error on "${model}" (attempt ${attempt}/${maxAttempts}): ${err.message}`,
-        );
 
         await sleep(backoff + jitter);
       }
@@ -186,12 +179,8 @@ Return ONLY valid JSON in the following format:
   try {
     const parsed = JSON.parse(content);
 
-    console.log(parsed);
-
     return interviewReportSchema.parse(parsed);
   } catch (err) {
-    console.error("Failed to parse/validate OpenRouter response:", content);
-
     throw new Error(`OpenRouter returned invalid output: ${err.message}`);
   }
 }

@@ -2,10 +2,6 @@ const pdfParse = require("pdf-parse");
 const generateInterviewReportGroq = require("../services/groq.service");
 const interviewreportschema = require("../models/interview.model");
 const generatereport = async (req, res) => {
-  console.log("This is Body");
-  console.log(req.body);
-  console.log("This is File");
-  console.log(req.file);
   try {
     if (!req.file) {
       return res.status(400).json({ message: "Resume file is required" });
@@ -40,7 +36,6 @@ const generatereport = async (req, res) => {
     });
     return res.status(200).json({ message: "report created", storedata });
   } catch (err) {
-    console.error("Error in generating interview report:", err);
     const status = err?.status === 503 ? 503 : 500;
     return res
       .status(status)
@@ -51,8 +46,7 @@ const generatereport = async (req, res) => {
 const getsinglereport = async (req, res) => {
   const { id } = req.params;
   const userid = req.user.id;
-  console.log(id)
-  
+
   try {
     const interviewreport = await interviewreportschema.findOne({
       user: userid,

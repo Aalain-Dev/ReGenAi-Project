@@ -6,7 +6,7 @@ const groq = new Groq({
 });
 
 const interviewReportSchema = z.object({
-  matchScore: z.number(),
+  matchScore: z.number().int().min(0).max(100),
   technicalQuestions: z.array(
     z.object({
       question: z.string(),
@@ -87,18 +87,11 @@ async function callGroqWithRetry(
         }
 
         if (attempt === maxAttempts) {
-          console.warn(
-            `Groq model "${model}" exhausted ${maxAttempts} attempts. Falling back to next model.`,
-          );
           break;
         }
 
         const backoff = baseDelayMs * 2 ** (attempt - 1);
         const jitter = Math.floor(Math.random() * 250);
-
-        console.warn(
-          `Groq transient error on "${model}" (attempt ${attempt}/${maxAttempts}): ${err.message}`,
-        );
 
         await sleep(backoff + jitter);
       }
@@ -132,7 +125,10 @@ ${selfDescription}
 Job Description:
 ${jobDescription}
 
-Return ONLY valid JSON in the following format:
+Return ONLY valid JSON in the following format.
+"matchScore" MUST be an integer from 0 to 100 representing the percentage
+match between the candidate and the job (e.g. 85 means an 85% match).
+Do NOT use a 0-1 or 0-10 scale.
 
 {
   "matchScore": number,
@@ -188,12 +184,8 @@ Return ONLY valid JSON in the following format:
   try {
     const parsed = JSON.parse(content);
 
-    console.log(parsed);
-
     return interviewReportSchema.parse(parsed);
   } catch (err) {
-    console.error("Failed to parse/validate Groq response:", content);
-
     throw new Error(`Groq returned invalid output: ${err.message}`);
   }
 }

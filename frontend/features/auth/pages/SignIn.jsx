@@ -52,11 +52,11 @@ const SignIn = () => {
                   message: "Please enter a valid email address",
                 },
               })}
-              className={`w-full rounded-xl border px-4 mt-4 py-2.5 text-sm font-medium outline-none transition-all focus:bg-white focus:ring-4 ${
-                errors.email
-                  ? "border-red-300 bg-red-50/10 focus:ring-red-500/10 focus:border-red-500"
-                  : "border-slate-200 bg-slate-50/50 focus:ring-indigo-600/10 focus:border-indigo-600"
-              }`}
+              className={`w-full rounded-lg border px-4 py-3 text-gray-900 placeholder-gray-400 outline-none transition-all duration-200 ${
+              errors.email
+                ? "border-red-500 focus:ring-2 focus:ring-red-200"
+                : "border-gray-300 focus:border-black focus:ring-2 focus:ring-gray-200"
+            }`}
             />
 
             {errors.email && (
@@ -75,7 +75,7 @@ const SignIn = () => {
               </label>
             </div>
 
-            <div className="relative">
+            <div className="relative mb-4">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
@@ -86,11 +86,11 @@ const SignIn = () => {
                     message: "Password must be at least 6 characters",
                   },
                 })}
-                className={`w-full pl-4 pr-11 py-2.5 rounded-xl border text-sm font-medium outline-none transition-all focus:bg-white focus:ring-4 ${
-                  errors.password
-                    ? "border-red-300 bg-red-50/10 focus:ring-red-500/10 focus:border-red-500"
-                    : "border-slate-200 bg-slate-50/50 focus:ring-indigo-600/10 focus:border-indigo-600"
-                }`}
+               className={`w-full rounded-lg border px-4 py-3 text-gray-900 placeholder-gray-400 outline-none transition-all duration-200 ${
+              errors.password
+                ? "border-red-500 focus:ring-2 focus:ring-red-200"
+                : "border-gray-300 focus:border-black focus:ring-2 focus:ring-gray-200"
+            }`}
               />
 
               <button

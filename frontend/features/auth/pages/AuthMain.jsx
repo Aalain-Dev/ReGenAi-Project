@@ -8,7 +8,27 @@ const AuthMain = () => {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row">
       {/* Left Side */}
-       <div className="w-full lg:w-1/2 p-4 md:p-6 lg:p-8 flex items-center justify-center bg-white">
+       <div className="w-full lg:w-1/2 p-4 md:p-6 lg:p-8 flex flex-col bg-white">
+        <div className="lg:hidden mb-8">
+          <div className="flex items-center gap-2">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-black text-white text-lg font-bold">
+              S
+            </span>
+            <h1 className="text-black text-2xl font-extrabold tracking-tight">
+              SkillGrowth
+            </h1>
+          </div>
+
+          <p className="mt-3 text-gray-900 text-lg font-semibold leading-snug">
+            Turn your resume into interview success.
+          </p>
+          <p className="mt-1 text-gray-500 text-sm leading-relaxed">
+            AI-powered skill analysis and targeted interview prep to help you
+            stand out.
+          </p>
+        </div>
+
+        <div className="flex-1 flex items-center justify-center">
         <div className="shadow-lg px-6 md:px-8 lg:px-10 py-8 w-full max-w-md rounded-xl">
           <p className="text-black text-2xl md:text-3xl font-semibold">
             Welcome Back
@@ -43,8 +63,9 @@ const AuthMain = () => {
             {value ? <Signup /> : <SignIn />}
           </div>
         </div>
+        </div>
       </div>
-      <div className="w-full lg:w-1/2 bg-[#0D0D15] p-6 md:p-8 lg:p-10">
+      <div className="hidden lg:block w-full lg:w-1/2 bg-[#0D0D15] p-6 md:p-8 lg:p-10">
       
         <div>
           <h1 className="text-3xl md:text-4xl font-bold text-white">

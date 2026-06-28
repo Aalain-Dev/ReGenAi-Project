@@ -1,107 +1,185 @@
-import React from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { UploadCloud, FileText, X, Loader2 } from "lucide-react";
 import InterviewHook from "../../../features/interview/hooks/interview.hooks";
 
 const GenerateReportModal = ({ isOpen, onClose }) => {
-  const { register, handleSubmit } = useForm();
- const {GenerateReporthook} = InterviewHook()
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
-  const onSubmit = async(data) => {
-    const formData = new FormData();
+  const { GenerateReporthook, GetallReporthook } = InterviewHook();
 
-    formData.append("resume", data.resume[0]);
-    formData.append("jobDescription", data.jobDescription);
-    formData.append("selfDescription", data.selfDescription);
-    
-    const response = await GenerateReporthook({
-      resume:data.resume,
-      jobdescription:data.jobDescription,
-      selfdescription:data.selfDescription
-    }) 
-    console.log(response)
-    // return 
+  // Show the picked file name in the custom upload area.
+  const resumeFile = watch("resume");
+  const fileName = resumeFile?.[0]?.name;
+
+  // Close on Escape for keyboard users.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e) => e.key === "Escape" && onClose();
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [isOpen, onClose]);
+
+  const handleClose = () => {
+    reset();
+    onClose();
+  };
+
+  const onSubmit = async (data) => {
+    await GenerateReporthook({
+      resume: data.resume,
+      jobdescription: data.jobDescription,
+      selfdescription: data.selfDescription,
+    });
+    await GetallReporthook(); // refresh the list shown on Home / Reports
+    reset();
+    onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4">
-      <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl">
-        {/* Header */}
-        <div className="flex items-center justify-between border-b px-6 py-4">
-          <h2 className="text-2xl font-bold">Analyze Resume</h2>
-
+    <div
+      className="fixed inset-0 z-50 flex items-start sm:items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto"
+      onClick={handleClose}
+    >
+      <div
+        className="my-4 sm:my-8 flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header (fixed) */}
+        <div className="flex shrink-0 items-center justify-between border-b px-6 py-4">
+          <h2 className="text-xl sm:text-2xl font-bold">Analyze Resume</h2>
           <button
-            onClick={onClose}
-            className="text-2xl font-semibold text-gray-500 hover:text-black"
+            type="button"
+            onClick={handleClose}
+            aria-label="Close"
+            className="flex h-8 w-8 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-black cursor-pointer"
           >
-            ×
+            <X size={20} />
           </button>
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 p-6">
-          {/* Resume Upload */}
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
-              Upload Resume
-            </label>
+        {/* Form: scrollable body + fixed footer */}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex min-h-0 flex-1 flex-col"
+        >
+          <div className="space-y-5 overflow-y-auto p-6">
+            {/* Resume Upload */}
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-gray-700">
+                Upload Resume <span className="text-gray-400">(PDF)</span>
+              </label>
 
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx"
-              {...register("resume", {
-                required: true,
-              })}
-              className="w-full rounded-lg border border-gray-300 p-3 file:mr-4 file:rounded-md file:border-0 file:bg-black file:px-4 file:py-2 file:text-white hover:file:bg-gray-800"
-            />
+              <label
+                className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed px-4 py-6 text-center transition ${
+                  errors.resume
+                    ? "border-red-400 bg-red-50"
+                    : fileName
+                      ? "border-emerald-400 bg-emerald-50"
+                      : "border-gray-300 hover:border-black hover:bg-gray-50"
+                }`}
+              >
+                <input
+                  type="file"
+                  accept=".pdf"
+                  {...register("resume", { required: "Resume is required" })}
+                  className="hidden"
+                />
+                {fileName ? (
+                  <>
+                    <FileText className="h-6 w-6 text-emerald-600" />
+                    <span className="text-sm font-medium text-gray-800 break-all">
+                      {fileName}
+                    </span>
+                    <span className="text-xs text-gray-500">
+                      Click to choose a different file
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <UploadCloud className="h-6 w-6 text-gray-400" />
+                    <span className="text-sm font-medium text-gray-700">
+                      Click to upload your resume
+                    </span>
+                    <span className="text-xs text-gray-500">PDF up to ~10MB</span>
+                  </>
+                )}
+              </label>
+              {errors.resume && (
+                <p className="mt-1.5 text-xs font-semibold text-red-600">
+                  {errors.resume.message}
+                </p>
+              )}
+            </div>
+
+            {/* Job Description */}
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-gray-700">
+                Job Description
+              </label>
+              <textarea
+                rows={5}
+                placeholder="Paste the job description here..."
+                {...register("jobDescription", {
+                  required: "Job description is required",
+                })}
+                className={`w-full rounded-lg border p-3 outline-none transition focus:border-black ${
+                  errors.jobDescription ? "border-red-400" : "border-gray-300"
+                }`}
+              />
+              {errors.jobDescription && (
+                <p className="mt-1.5 text-xs font-semibold text-red-600">
+                  {errors.jobDescription.message}
+                </p>
+              )}
+            </div>
+
+            {/* Self Description */}
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-gray-700">
+                Tell Us About Yourself{" "}
+                <span className="text-gray-400">(optional)</span>
+              </label>
+              <textarea
+                rows={4}
+                placeholder="Describe your skills, experience, goals, achievements, etc."
+                {...register("selfDescription")}
+                className="w-full rounded-lg border border-gray-300 p-3 outline-none transition focus:border-black"
+              />
+            </div>
           </div>
 
-          {/* Job Description */}
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
-              Job Description
-            </label>
-
-            <textarea
-              rows={5}
-              placeholder="Paste the job description here..."
-              {...register("jobDescription", {
-                required: true,
-              })}
-              className="w-full rounded-lg border border-gray-300 p-3 outline-none focus:border-black"
-            />
-          </div>
-
-          {/* Self Description */}
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-gray-700">
-              Tell Us About Yourself
-            </label>
-
-            <textarea
-              rows={4}
-              placeholder="Describe your skills, experience, goals, achievements, etc."
-              {...register("selfDescription")}
-              className="w-full rounded-lg border border-gray-300 p-3 outline-none focus:border-black"
-            />
-          </div>
-
-          {/* Buttons */}
-          <div className="flex justify-end gap-3 pt-2">
+          {/* Footer (fixed) */}
+          <div className="flex shrink-0 justify-end gap-3 border-t px-6 py-4">
             <button
               type="button"
-              onClick={onClose}
-              className="rounded-lg border border-gray-300 px-5 py-2 font-medium hover:bg-gray-100"
+              onClick={handleClose}
+              disabled={isSubmitting}
+              className="rounded-lg border border-gray-300 px-5 py-2 font-medium transition hover:bg-gray-100 disabled:opacity-50 cursor-pointer"
             >
               Cancel
             </button>
-
             <button
               type="submit"
-              className="rounded-lg bg-black px-6 py-2 font-medium text-white hover:bg-gray-800"
+              disabled={isSubmitting}
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-black px-6 py-2 font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-70 cursor-pointer"
             >
-              Generate Report
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <span>Generating...</span>
+                </>
+              ) : (
+                "Generate Report"
+              )}
             </button>
           </div>
         </form>

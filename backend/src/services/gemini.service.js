@@ -236,16 +236,10 @@ async function callGeminiWithRetry(
         const transient = isTransientError(err);
         if (!transient) throw err;
         if (attempt === maxAttempts) {
-          console.warn(
-            `Gemini model "${model}" exhausted ${maxAttempts} attempts. Falling back to next model.`,
-          );
           break;
         }
         const backoff = baseDelayMs * 2 ** (attempt - 1);
         const jitter = Math.floor(Math.random() * 250);
-        console.warn(
-          `Gemini transient error on "${model}" (attempt ${attempt}/${maxAttempts}): ${err.message}. Retrying in ${backoff + jitter}ms`,
-        );
         await sleep(backoff + jitter);
       }
     }
@@ -285,10 +279,8 @@ async function generateInterviewReportGemini({
 
   try {
     const parsed = JSON.parse(response.text);
-    console.log(parsed)
     return interviewReportSchema.parse(parsed);
   } catch (err) {
-    console.error("Failed to parse/validate Gemini response:", response.text);
     throw new Error(`Gemini returned invalid output: ${err.message}`);
   }
 }
