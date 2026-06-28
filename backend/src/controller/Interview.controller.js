@@ -1,6 +1,7 @@
 const pdfParse = require("pdf-parse");
 const generateInterviewReportGroq = require("../services/groq.service");
 const interviewreportschema = require("../models/interview.model");
+const { checkgeneration, checkGeneration } = require("../services/usage.services");
 const generatereport = async (req, res) => {
   try {
     if (!req.file) {
@@ -20,6 +21,12 @@ const generatereport = async (req, res) => {
       return res
         .status(400)
         .json({ message: "Could not extract text from the provided resume" });
+    }
+    const check = await checkGeneration(req.user.id);
+    if (!check.allowed) {
+      return res.status(429).json({
+        message: `You have reached the maximum number of reports allowed per day. You have ${check.remaining} remaining.`,
+      });
     }
     const { selfDescription, jobDescription } = req.body;
     const report = await generateInterviewReportGroq({

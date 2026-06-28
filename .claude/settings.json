@@ -4,7 +4,10 @@
       "Bash(npm -v)",
       "Bash(npm view *)",
       "Bash(npm install *)",
-      "Bash(node -e \"require\\('./src/app.js'\\); console.log\\('app.js loaded OK — all modules resolve'\\);\")"
+      "Bash(node -e \"require\\('./src/app.js'\\); console.log\\('app.js loaded OK — all modules resolve'\\);\")",
+      "Bash(grep -iE \"^\\(upload|upload-cloud|file-up|loader|loader-2|loader-circle|file-text|x\\)\\\\.mjs$\")",
+      "Bash(grep -iE \"^\\(arrow-up-right|alert-triangle|layers|file-text|plus|folder-open|file-search\\)\\\\.mjs$\")",
+      "Bash(node \"C:/Users/aalai/AppData/Local/Temp/claude/c--Users-aalai-OneDrive-Documents-GitHub-new-ReGenAi-Project/b7bdba71-54be-4032-8449-c840cb63dc32/scratchpad/inspect-scores.js\")"
     ]
   }
 }
