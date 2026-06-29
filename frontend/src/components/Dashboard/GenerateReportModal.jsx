@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { UploadCloud, FileText, X, Loader2 } from "lucide-react";
 import InterviewHook from "../../../features/interview/hooks/interview.hooks";
 
@@ -32,14 +33,23 @@ const GenerateReportModal = ({ isOpen, onClose }) => {
   };
 
   const onSubmit = async (data) => {
-    await GenerateReporthook({
-      resume: data.resume,
-      jobdescription: data.jobDescription,
-      selfdescription: data.selfDescription,
-    });
-    await GetallReporthook(); // refresh the list shown on Home / Reports
-    reset();
-    onClose();
+    try {
+      await GenerateReporthook({
+        resume: data.resume,
+        jobdescription: data.jobDescription,
+        selfdescription: data.selfDescription,
+      });
+      await GetallReporthook(); // refresh the list shown on Home / Reports
+      toast.success("Report generated successfully");
+      reset();
+      onClose();
+    } catch (e) {
+      // Keep the modal open so the user can fix the input and retry.
+      toast.error(
+        e?.response?.data?.message ||
+          "Failed to generate report. Please try again.",
+      );
+    }
   };
 
   if (!isOpen) return null;
