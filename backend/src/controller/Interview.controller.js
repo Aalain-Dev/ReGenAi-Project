@@ -1,7 +1,8 @@
+const mongoose = require("mongoose");
 const pdfParse = require("pdf-parse");
 const generateInterviewReportGroq = require("../services/groq.service");
 const interviewreportschema = require("../models/interview.model");
-const { checkgeneration, checkGeneration } = require("../services/usage.services");
+const { checkGeneration } = require("../services/usage.services");
 const generatereport = async (req, res) => {
   try {
     if (!req.file) {
@@ -54,18 +55,23 @@ const getsinglereport = async (req, res) => {
   const { id } = req.params;
   const userid = req.user.id;
 
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ message: "Invalid report id" });
+  }
+
   try {
     const interviewreport = await interviewreportschema.findOne({
       user: userid,
       _id: id,
     });
+    if (!interviewreport) {
+      return res.status(404).json({ message: "Report not found" });
+    }
     return res
       .status(200)
       .json({ message: "report fetched", data: interviewreport });
   } catch (e) {
-    return res
-      .status(500)
-      .json({ message: `error in fetching report ${e.message}` });
+    return res.status(500).json({ message: "Failed to fetch report" });
   }
 };
 const getallreports = async (req, res) => {
@@ -84,7 +90,7 @@ const getallreports = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: "Failed to fetch reports",
     });
   }
 };

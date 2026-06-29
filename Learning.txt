@@ -11,6 +11,13 @@ Learning in Backed
 9. got to know this to be used in poduction app
 "start": "node server.js",
 "dev":   "nodemon server.js"
+10. Learned there is a package called morgan that detail the logs 
+11. got to know abt compression package  
+12. Learned in db connection use case of process.exit(1) and process.exit(0)
+13. learned that we can set the options  to cookies
+14. Understood that there should be a file that will check all the required variables are there in ENV or not. Just a check for all the ENV variables 
+15. study this line app.set("trust proxy", 1);
+
 
 
 Steps implementing the groq and openai
