@@ -9,4 +9,4 @@
 9. Add a route if no route found that should redirect to login if logged in then home
 10. Content to be finalised
 11. Logout btn to be addded 
-12. This is just check that token blacklisting is working or not 
+12. This is just check that token blacklisting is working or not

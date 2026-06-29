@@ -1,10 +1,16 @@
 Learning in Backed 
 
-1. Learnign of the auth system working
+1. Learning of the auth system working
 2. how to store the jwt in cookies frm backend
 3. how to do make a middelware propely 
 4. token blacklisting concept 
 5. implementing the groq and openrouter keys for the model fallback 
+6. Got To know about the Express Rate Limit package that helps in brute force attack that too much 
+7. got to know abt express helmet package 
+8. got to know about mongodb funcationality called time to live 
+9. got to know this to be used in poduction app
+"start": "node server.js",
+"dev":   "nodemon server.js"
 
 
 Steps implementing the groq and openai
@@ -17,3 +23,4 @@ Learnign in frontend
 1. 4 layer architecture 
 2. use case of the with credetials in apibase for storing cookies 
 3. hooks,   
+
