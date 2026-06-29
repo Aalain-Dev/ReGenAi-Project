@@ -5,8 +5,8 @@ const authmiddleware = async(req, res, next) => {
     const token = req.cookies.token;
     if (!token)
 {
-  return res.status(400).json({
-    message:"Token Not Found"
+  return res.status(401).json({
+    message:"Authentication required"
   })
 }
   try { 
