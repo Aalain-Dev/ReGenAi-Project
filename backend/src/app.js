@@ -4,7 +4,9 @@ const cors = require("cors");
 const helmet = require("helmet");
 const compression = require("compression");
 const morgan = require("morgan");
+const swaggerUi = require("swagger-ui-express");
 
+const swaggerSpec = require("./config/swagger");
 const authrouter = require("./routes/auth.routes");
 const interviewrouter = require("./routes/interview.routes");
 
@@ -35,6 +37,10 @@ app.use(cookieParser());
 
 // Health check for load balancers / uptime monitoring.
 app.get("/health", (req, res) => res.status(200).json({ status: "ok" }));
+
+// Interactive API documentation (Swagger UI) and the raw OpenAPI spec.
+app.get("/api-docs.json", (req, res) => res.json(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/api/auth", authrouter);
 app.use("/api/reports", interviewrouter);
