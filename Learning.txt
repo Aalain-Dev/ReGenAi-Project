@@ -29,5 +29,4 @@ Learnign in frontend
 
 1. 4 layer architecture 
 2. use case of the with credetials in apibase for storing cookies 
-3. hooks,   
-
+3. hooks,

@@ -18,8 +18,12 @@ const options = {
     },
     servers: [
       {
-        url: process.env.API_BASE_URL || "http://localhost:3000",
-        description: "Current server",
+        url: "http://localhost:3000",
+        description: "Local development server",
+      },
+      {
+        url: process.env.BACKEND_DEPLOYED_URL,
+        description: "Deployed (production) server",
       },
     ],
     tags: [
