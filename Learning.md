@@ -249,6 +249,8 @@ Learned about:
 Used before every request to:
 
 - Attach authentication tokens
+
+
 - Modify request headers
 - Log outgoing requests
 
